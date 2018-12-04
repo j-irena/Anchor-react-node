@@ -1,12 +1,21 @@
-var express = require('express');
-var app = express();
-require('dotenv').config();
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+require("dotenv").config();
 
-var mongoose = require('mongoose');
+app.use(helmet());
+
+// enable all CORS requests
+app.use(cors());
+
+// log HTTP requests
+app.use(morgan("combined"));
+
+const mongoose = require("mongoose");
 mongoose.connect(process.env.MONGOLAB_URI);
 
-// ADD THESE TWO LINES
-var VehicleController = require('./routes/VehicleController');
-app.use('/vehicles', VehicleController);
+const VehicleController = require("./routes/VehicleController");
+app.use("/vehicles", VehicleController);
 module.exports = app;
-

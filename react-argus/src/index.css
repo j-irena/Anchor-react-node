@@ -1,4 +1,26 @@
 body {
-  padding: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
   margin-top: 100px;
+}
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  font-size: 35px;
+  line-height: 1.33;
+  border-radius: 35px;
+  position: fixed;
+  z-index: 50;
+  bottom: 30px;
+  right: 30px;
 }

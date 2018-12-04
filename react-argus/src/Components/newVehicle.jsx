@@ -9,15 +9,13 @@ class NewVehicle extends Component {
     this.state = {
       disabled: false,
       name: "",
-      type: ""
+      type: []
     };
   }
   // componentDidMount() {
-  //   fetch('/')
-  //     .then((response) => response.json())
-  //     .then((type) => this.setState({
-  //       type: type
-  //     }),
+  //   fetch("/vehicleTypes")
+  //     .then(response => response.json())
+  //     .then(type => this.setState({ type }));
   // }
 
   updateType(value) {
@@ -60,7 +58,7 @@ class NewVehicle extends Component {
               <div className="card-header">New Vehicle</div>
               <div className="card-body text-left">
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">Vehicle name:</label>
+                  <label>Vehicle name:</label>
                   <input
                     disabled={this.state.disabled}
                     type="text"
@@ -72,7 +70,7 @@ class NewVehicle extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="exampleInputEmail1">type:</label>
+                  <label>type:</label>
                   <input
                     disabled={this.state.disabled}
                     type="text"

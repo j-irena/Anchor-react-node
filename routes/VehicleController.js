@@ -47,6 +47,14 @@ router.get("/", function(req, res) {
   });
 });
 
+// Return all the vehicle types in the database
+router.get("/vehicleTypes", function(req, res) {
+  types = Vehicle.schema.path("type").enumValues;
+  if (!types)
+    return res.status(500).send("There was a problem finding the vehicles.");
+  res.status(200).send(types);
+});
+
 // Gets a single vehicle in the database
 router.get("/:id", function(req, res) {
   Vehicle.findById(req.params.id, function(err, vehicle) {

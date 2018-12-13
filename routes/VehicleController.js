@@ -22,13 +22,13 @@ const checkJwt = jwt({
 });
 
 // Create a new vehicle
-router.post("/", checkJwt, function(req, res) {
+router.post("/", checkJwt, (req, res) => {
   Vehicle.create(
     {
       name: req.body.name,
       type: req.body.type
     },
-    function(err, vehicle) {
+    (err, vehicle) => {
       if (err)
         return res
           .status(500)
@@ -39,8 +39,8 @@ router.post("/", checkJwt, function(req, res) {
 });
 
 // Return all the vehicles in the database
-router.get("/", function(req, res) {
-  Vehicle.find({}, function(err, vehicles) {
+router.get("/", (req, res) => {
+  Vehicle.find({}, (err, vehicles) => {
     if (err)
       return res.status(500).send("There was a problem finding the vehicles.");
     res.status(200).send(vehicles);
@@ -48,7 +48,7 @@ router.get("/", function(req, res) {
 });
 
 // Return all the vehicle types in the database
-router.get("/vehicleTypes", function(req, res) {
+router.get("/vehicleTypes", (req, res) => {
   types = Vehicle.schema.path("type").enumValues;
   if (!types)
     return res.status(500).send("There was a problem finding the vehicles.");
@@ -56,8 +56,8 @@ router.get("/vehicleTypes", function(req, res) {
 });
 
 // Gets a single vehicle in the database
-router.get("/:id", function(req, res) {
-  Vehicle.findById(req.params.id, function(err, vehicle) {
+router.get("/:id", (req, res) => {
+  Vehicle.findById(req.params.id, (err, vehicle) => {
     if (err)
       return res.status(500).send("There was a problem finding the vehicle.");
     if (!vehicle) return res.status(404).send("No vehicle found.");
@@ -66,8 +66,8 @@ router.get("/:id", function(req, res) {
 });
 
 // Deletes a vehicle from the database
-router.delete("/:id", function(req, res) {
-  Vehicle.findByIdAndRemove(req.params.id, function(err, vehicle) {
+router.delete("/:id", checkJwt, (req, res) => {
+  Vehicle.findByIdAndRemove(req.params.id, (err, vehicle) => {
     if (err)
       return res.status(500).send("There was a problem deleting the vehicle.");
     res.status(200).send("Vehicle " + vehicle.name + " was deleted.");
@@ -75,14 +75,18 @@ router.delete("/:id", function(req, res) {
 });
 
 // Updates a single vehicle in the database
-router.put("/:id", function(req, res) {
-  Vehicle.findByIdAndUpdate(req.params.id, req.body, { new: true }, function(
-    err,
-    vehicle
-  ) {
-    if (err)
-      return res.status(500).send("There was a problem updating the vehicle.");
-    res.status(200).send(vehicle);
-  });
+router.put("/:id", checkJwt, (req, res) => {
+  Vehicle.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true },
+    (err, vehicle) => {
+      if (err)
+        return res
+          .status(500)
+          .send("There was a problem updating the vehicle.");
+      res.status(200).send(vehicle);
+    }
+  );
 });
 module.exports = router;
